@@ -14,13 +14,13 @@
   <body>
   <ul class="nav justify-content-center">
     <li class="nav-item">
-      <a class="nav-link active" aria-current="page" href="#">Tárgyak</a>
+       <%= link_to 'Tárgyak', subjects_path, class: 'nav-link'%>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="#">Kurzusok</a>
+      <%= link_to 'Kurzusok', courses_path, class: 'nav-link'%>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="#">Kurzus Tipusok</a>
+      <%= link_to 'Kurzus tipusok', course_types_path, class: 'nav-link'%>
     </li>
     <li class="nav-item">
       <%= link_to 'Hallgatók', users_path, class: 'nav-link'%>

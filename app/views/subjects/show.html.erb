@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<h1  class="text-center">
+  <%= @subject.name %>
+</h1>
+<h3>
+  Kurzusok:
+</h3>
+<table class="table">
+  <thead>
+  <tr>
+    <th scope="col">Kurzus Kód</th>
+    <th scope="col">Tipus</th>
+    <th scope="col">Megjelöl</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @courses.each do |course| %>
+  <tr>
+    <td><%= course.code %></td>
+    <td><%= course.type.name %></td>
+    <td>Otto</td>
+  </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to 'Edit', edit_subject_path(@subject) %> |
+<%= link_to 'Back', subjects_path %>

@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Tárgyak</h1>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Név</th>
+      <th scope="col">Kredit</th>
+      <th scope="col" colspan="1"></th>
+
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @subjects.each do |subject| %>
+      <tr>
+        <td><%= subject.name %></td>
+        <td><%= subject.credit %></td>
+        <td><%= link_to 'Részletek', subject %></td>
+<!--        <td><%#= link_to 'Edit', edit_subject_path(subject) %></td>-->
+<!--        <td><%#= link_to 'Destroy', subject, method: :delete, data: { confirm: 'Are you sure?' } %></td>-->
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Subject', new_subject_path %>

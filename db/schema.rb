@@ -10,10 +10,47 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_11_082028) do
+ActiveRecord::Schema.define(version: 2021_05_14_095128) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "course_types", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "courses", force: :cascade do |t|
+    t.bigint "subject_id", null: false
+    t.bigint "course_type_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.integer "number"
+    t.index ["course_type_id"], name: "index_courses_on_course_type_id"
+    t.index ["subject_id"], name: "index_courses_on_subject_id"
+  end
+
+  create_table "courses_subject_applications", id: false, force: :cascade do |t|
+    t.bigint "course_id", null: false
+    t.bigint "subject_application_id", null: false
+  end
+
+  create_table "subject_applications", force: :cascade do |t|
+    t.bigint "subject_id", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["subject_id"], name: "index_subject_applications_on_subject_id"
+    t.index ["user_id"], name: "index_subject_applications_on_user_id"
+  end
+
+  create_table "subjects", force: :cascade do |t|
+    t.string "name"
+    t.integer "credit"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "name"
@@ -21,4 +58,9 @@ ActiveRecord::Schema.define(version: 2021_03_11_082028) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
+
+  add_foreign_key "courses", "course_types"
+  add_foreign_key "courses", "subjects"
+  add_foreign_key "subject_applications", "subjects"
+  add_foreign_key "subject_applications", "users"
 end
