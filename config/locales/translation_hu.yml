@@ -1,0 +1,44 @@
+hu:
+  activerecord:
+    models:
+      course: Tanfolyam  #g
+      course_type: Tanfolyam típusa  #g
+      habtm_courses: Habtm tanfolyamok  #g
+      habtm_subject_applications: Habtm tantárgyi alkalmazások  #g
+      subject: Tantárgy  #g
+      subject_application: Tantárgyi alkalmazás  #g
+      user: Felhasználó  #g
+
+    attributes:
+      course:
+        course_type: :activerecord.models.course_type  #g
+        number: Szám  #g
+        subject: :activerecord.models.subject  #g
+        subject_applications: Tantárgyi alkalmazások  #g
+
+      course_type:
+        name: Név  #g
+
+      habtm_courses:
+        course: :activerecord.models.course  #g
+        left_side: :activerecord.models.left_side  #g
+
+      habtm_subject_applications:
+        left_side: :activerecord.models.left_side  #g
+        subject_application: :activerecord.models.subject_application  #g
+
+      subject:
+        courses: Tanfolyamok  #g
+        credit: Hitel  #g
+        name: Név  #g
+
+      subject_application:
+        courses: Tanfolyamok  #g
+        subject: :activerecord.models.subject  #g
+        user: :activerecord.models.user  #g
+
+      user:
+        name: Név  #g
+        neptun: Neptun  #g
+        password: Jelszó
+        subject_applications: Felvett tárgyak  #g

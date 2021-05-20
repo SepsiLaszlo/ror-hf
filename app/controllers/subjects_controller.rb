@@ -36,7 +36,7 @@ class SubjectsController < ApplicationController
   end
 
   def apply
-    p ''
+    # SubjectApplication.create()
   end
 
   # PATCH/PUT /subjects/1 or /subjects/1.json

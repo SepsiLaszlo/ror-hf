@@ -6,11 +6,9 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 #
-100.times do
-  alfa_numerics = ('A'..'Z').to_a + (1..9).to_a
-  neptun = Array.new(6).map { alfa_numerics.sample }.join
-
-  User.create!(name: Faker::Name.name, neptun: neptun)
+10.times do
+  neptun = UsersHelper.generate_neptun
+  User.create!(name: Faker::Name.name, neptun: neptun, password: neptun)
 end
 
 subjects = ["Analízis", "Grafika", "Mesterséges Inteligencia", "Szoftver technikák"]
