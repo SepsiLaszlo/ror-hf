@@ -6,6 +6,7 @@
 <h3>
   Kurzusok:
 </h3>
+<%= form_with url: apply_subject_path(@subject) do |form| %>
 <table class="table">
   <thead>
   <tr>
@@ -19,11 +20,12 @@
   <tr>
     <td><%= course.code %></td>
     <td><%= course.type.name %></td>
-    <td>Otto</td>
+    <td><%= form.check_box "courses[]", {}, course.id, nil %></td>
   </tr>
     <% end %>
   </tbody>
 </table>
-
+  <%= form.submit "Felvesz" %>
+<% end %>
 <%= link_to 'Edit', edit_subject_path(@subject) %> |
 <%= link_to 'Back', subjects_path %>

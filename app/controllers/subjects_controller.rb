@@ -35,6 +35,10 @@ class SubjectsController < ApplicationController
     end
   end
 
+  def apply
+    p ''
+  end
+
   # PATCH/PUT /subjects/1 or /subjects/1.json
   def update
     respond_to do |format|
