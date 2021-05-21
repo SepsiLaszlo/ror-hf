@@ -12,6 +12,7 @@
   </head>
 
   <body>
+  <%= flash.notice %>
   <ul class="nav justify-content-center">
     <li class="nav-item">
        <%= link_to 'Tárgyak', subjects_path, class: 'nav-link'%>
@@ -26,7 +27,11 @@
       <%= link_to 'Hallgatók', users_path, class: 'nav-link'%>
     </li>
     <li class="nav-item">
-      <%= link_to 'Bejelentkezés', new_user_path, class: 'nav-link' %>
+      <% if current_user %>
+        <%= link_to 'Profil', user_path(current_user), class: 'nav-link'%>
+      <% else %>
+        <%= link_to 'Bejelentkezés', new_user_path, class: 'nav-link' %>
+      <% end %>
     </li>
   </ul>
     <%= yield %>

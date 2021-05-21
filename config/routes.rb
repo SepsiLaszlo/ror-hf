@@ -4,7 +4,9 @@ Rails.application.routes.draw do
   resources :subjects do
     post :apply, on: :member
   end
-  resources :users
+  resources :users do
+    post :login, on: :collection
+  end
 
   root 'subjects#index'
 end
