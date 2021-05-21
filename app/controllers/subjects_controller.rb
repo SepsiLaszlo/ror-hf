@@ -1,5 +1,5 @@
 class SubjectsController < ApplicationController
-  before_action :set_subject, only: %i[ show edit update destroy ]
+  before_action :set_subject, only: %i[ show edit update destroy apply]
 
   # GET /subjects or /subjects.json
   def index
@@ -36,7 +36,14 @@ class SubjectsController < ApplicationController
   end
 
   def apply
-    # SubjectApplication.create()
+    courses = Course.where(id: params['courses']).to_a
+    SubjectApplicationCreateService.call(@subject, current_user, courses)
+    flash.notice = 'Sikeres tárgyfelvétel!'
+    redirect_to subjects_path
+  rescue SubjectApplicationCreateService::NotAllCourseTypeApplied,
+         SubjectApplicationCreateService::MultipleCourseWithSameType => e
+    flash.notice = e.message
+    redirect_to subject_path @subject
   end
 
   # PATCH/PUT /subjects/1 or /subjects/1.json

@@ -1,5 +1,3 @@
-<p id="notice"><%= notice %></p>
-
 <h1  class="text-center">
   <%= @subject.name %>
 </h1>
@@ -25,7 +23,7 @@
     <% end %>
   </tbody>
 </table>
-  <%= form.submit "Felvesz" %>
+  <%= form.submit "Felvesz", class: 'btn btn-primary' %>
 <% end %>
 <%= link_to 'Edit', edit_subject_path(@subject) %> |
 <%= link_to 'Back', subjects_path %>
