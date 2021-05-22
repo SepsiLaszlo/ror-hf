@@ -9,6 +9,11 @@ class SubjectApplicationCreateService
       'Minden Kurzus típusból fel kell venni egyet!'
     end
   end
+  class UserAlreadyAppliedToSubject < StandardError
+    def message
+      'Már felvetted a tárgyat!'
+    end
+  end
 
   attr_accessor :subject, :user, :courses
 
@@ -27,6 +32,8 @@ class SubjectApplicationCreateService
     raise NotAllCourseTypeApplied unless course_type_ids.sort == available_course_types.map(&:id).sort
 
     SubjectApplication.create!(user: user, subject: subject, courses: courses)
+  rescue ActiveRecord::RecordNotUnique
+    raise UserAlreadyAppliedToSubject
   end
 
   private

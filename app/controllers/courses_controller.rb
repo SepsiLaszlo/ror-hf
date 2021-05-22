@@ -3,7 +3,7 @@ class CoursesController < ApplicationController
 
   # GET /courses or /courses.json
   def index
-    @courses = Course.all
+    @courses = Course.includes(:course_type, :subject).all.to_a
   end
 
   # GET /courses/1 or /courses/1.json

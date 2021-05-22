@@ -1,5 +1,5 @@
 class SubjectsController < ApplicationController
-  before_action :set_subject, only: %i[ show edit update destroy apply]
+  before_action :set_subject, only: %i[ show edit update destroy apply drop]
 
   # GET /subjects or /subjects.json
   def index
@@ -9,6 +9,8 @@ class SubjectsController < ApplicationController
   # GET /subjects/1 or /subjects/1.json
   def show
     @courses = @subject.courses.includes(:course_type)
+    @subject_application = SubjectApplication.includes(:courses).where(user: current_user, subject: @subject)&.first
+    @courses_applied = @subject_application&.courses
   end
 
   # GET /subjects/new
@@ -22,28 +24,35 @@ class SubjectsController < ApplicationController
 
   # POST /subjects or /subjects.json
   def create
-    @subject = Subject.new(subject_params)
-
-    respond_to do |format|
-      if @subject.save
-        format.html { redirect_to @subject, notice: "Subject was successfully created." }
-        format.json { render :show, status: :created, location: @subject }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @subject.errors, status: :unprocessable_entity }
+    ActiveRecord::Base.transaction do
+      @subject = Subject.create!(subject_params)
+      course_type_ids = params['subject']['courses'].split.map(&:to_i)
+      course_type_ids.map do |id|
+        Course.create!(course_type_id: id, subject: @subject)
       end
     end
+
+    flash.notice = 'Sikeres tárgy létrehozás!'
+    redirect_to subject_path(@subject)
   end
 
   def apply
     courses = Course.where(id: params['courses']).to_a
     SubjectApplicationCreateService.call(@subject, current_user, courses)
     flash.notice = 'Sikeres tárgyfelvétel!'
-    redirect_to subjects_path
+    redirect_to subject_path @subject
   rescue SubjectApplicationCreateService::NotAllCourseTypeApplied,
-         SubjectApplicationCreateService::MultipleCourseWithSameType => e
+    SubjectApplicationCreateService::MultipleCourseWithSameType,
+    SubjectApplicationCreateService::UserAlreadyAppliedToSubject => e
     flash.notice = e.message
     redirect_to subject_path @subject
+  end
+
+  def drop
+    subject_application = SubjectApplication.where(user: current_user, subject: @subject).first
+    subject_application.destroy!
+    flash.notice = 'Sikeres leadás!'
+    redirect_to subject_path(@subject)
   end
 
   # PATCH/PUT /subjects/1 or /subjects/1.json
@@ -69,13 +78,14 @@ class SubjectsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_subject
-      @subject = Subject.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def subject_params
-      params.require(:subject).permit(:name, :credit)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_subject
+    @subject = Subject.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def subject_params
+    params.require(:subject).permit(:name, :credit)
+  end
 end

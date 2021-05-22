@@ -18,12 +18,15 @@
   <tr>
     <td><%= course.code %></td>
     <td><%= course.type.name %></td>
-    <td><%= form.check_box "courses[]", {}, course.id, nil %></td>
+    <td><%= form.check_box "courses[]", {checked: @courses_applied&.include?(course)}, course.id, nil %></td>
   </tr>
     <% end %>
   </tbody>
 </table>
-  <%= form.submit "Felvesz", class: 'btn btn-primary' %>
+  <% if @subject_application %>
+    <%= link_to "Lead", drop_subject_path(@subject), method: :post, class: 'btn btn-danger',style:'float: right' %>
+  <% else %>
+    <%= form.submit "Felvesz", class: 'btn btn-primary', style:'float: right' %>
+  <% end %>
 <% end %>
-<%= link_to 'Edit', edit_subject_path(@subject) %> |
-<%= link_to 'Back', subjects_path %>
+<%= link_to 'Vissza', subjects_path, class: 'btn btn-primary' %>

@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   resources :course_types
   resources :subjects do
     post :apply, on: :member
+    post :drop, on: :member
   end
   resources :users do
     post :login, on: :collection

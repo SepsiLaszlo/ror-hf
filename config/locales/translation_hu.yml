@@ -29,7 +29,7 @@ hu:
 
       subject:
         courses: Tanfolyamok  #g
-        credit: Hitel  #g
+        credit: Kredit  #g
         name: Név  #g
 
       subject_application:
