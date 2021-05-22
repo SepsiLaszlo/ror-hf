@@ -37,12 +37,4 @@ class CourseTypesControllerTest < ActionDispatch::IntegrationTest
     patch course_type_url(@course_type), params: { course_type: { name: @course_type.name } }
     assert_redirected_to course_type_url(@course_type)
   end
-
-  test "should destroy course_type" do
-    assert_difference('CourseType.count', -1) do
-      delete course_type_url(@course_type)
-    end
-
-    assert_redirected_to course_types_url
-  end
 end

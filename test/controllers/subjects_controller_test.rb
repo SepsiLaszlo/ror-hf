@@ -15,14 +15,6 @@ class SubjectsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "should create subject" do
-    assert_difference('Subject.count') do
-      post subjects_url, params: { subject: { credit: @subject.credit, name: @subject.name } }
-    end
-
-    assert_redirected_to subject_url(Subject.last)
-  end
-
   test "should show subject" do
     get subject_url(@subject)
     assert_response :success
@@ -36,13 +28,5 @@ class SubjectsControllerTest < ActionDispatch::IntegrationTest
   test "should update subject" do
     patch subject_url(@subject), params: { subject: { credit: @subject.credit, name: @subject.name } }
     assert_redirected_to subject_url(@subject)
-  end
-
-  test "should destroy subject" do
-    assert_difference('Subject.count', -1) do
-      delete subject_url(@subject)
-    end
-
-    assert_redirected_to subjects_url
   end
 end
