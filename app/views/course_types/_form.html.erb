@@ -12,11 +12,11 @@
   <% end %>
 
   <div class="field">
-    <%= form.label :name %>
-    <%= form.text_field :name %>
+    <%= form.label :name, class: 'form-label'%>
+    <%= form.text_field :name, class: 'form-control'%>
   </div>
 
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit "Létrehozás", class: 'btn btn-primary float-end' %>
   </div>
 <% end %>

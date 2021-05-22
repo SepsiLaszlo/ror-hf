@@ -1,9 +1,16 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <strong>Name:</strong>
-  <%= @user.name %>
-</p>
-
-<%= link_to 'Edit', edit_user_path(@user) %> |
-<%= link_to 'Back', users_path %>
+<div class="card" >
+  <div class="card-body">
+    <h5 class="card-title"><%= @user.name %></h5>
+    <p class="card-text"><%= @user.neptun %></p>
+  </div>
+  <h5>Tárgyak</h5>
+  <ul class="list-group list-group-flush">
+    <% @subjects.each do |subject| %>
+      <li class="list-group-item"><%=link_to subject.name, subject_path(subject) %></li>
+    <% end %>
+  </ul>
+  <div class="card-body">
+    <a href="#" class="card-link"></a>
+    <%= link_to 'Kijelelntkezés', logout_users_path ,method: :post, class: 'card link' %>
+  </div>
+</div>

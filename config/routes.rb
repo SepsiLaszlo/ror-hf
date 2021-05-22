@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   end
   resources :users do
     post :login, on: :collection
+    post :logout, on: :collection
   end
 
   root 'subjects#index'

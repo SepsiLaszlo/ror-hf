@@ -8,6 +8,8 @@ class UsersController < ApplicationController
 
   # GET /users/1 or /users/1.json
   def show
+    subject_ids = @user.subject_applications.map(&:subject_id)
+    @subjects = Subject.find(subject_ids)
   end
 
   # GET /users/new
@@ -31,6 +33,11 @@ class UsersController < ApplicationController
     end
   end
 
+  def logout
+    session.destroy
+    flash.notice = 'Sikeres kijelentkezés'
+    redirect_to new_user_path
+  end
   # POST /users or /users.json
   def create
     @user = User.new(user_params)
